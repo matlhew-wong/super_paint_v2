@@ -1,0 +1,104 @@
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.File;
+
+import java.awt.Color;
+
+import java.lang.Boolean;
+import java.lang.Intger;
+
+public class PreferanceReader {
+    
+    String preferences;
+    String line;
+    FileReader fileReader;
+    
+    public PreferenceReader() {
+        preferences = "preferences.txt";
+        line = null;
+        try {
+            fileReader = new FileReader(preferences);
+        } catch (IOException ioException) {
+            fileReader = new FileReader(new File(preferences));
+        }
+    }
+    
+    public String returnShapeType() {
+        BufferedReader bufferedReader = new BufferedReader(preferences);
+        String shapeType = bufferedReader.readLine();
+        bufferedReader.close(); 
+        return shapeType;
+    }
+    
+    public boolean returnFill() {
+        BufferedReader bufferedReader = new BufferedReader(preferences);
+        bufferedReader.readLine();
+        boolean fill = Boolean.parseBoolean(bufferedReader.readLine());
+        bufferedReader.close(); 
+        return fill;
+    }
+    
+    public boolean returnGrad() {
+        BufferedReader bufferedReader = new BufferedReader(preferences);
+        for (int count = 0; count < 2; count += 1) {
+            bufferedReader.readLine();
+        }
+        Intger grad = Intger.parseInt(bufferedReader.readLine());
+        bufferedReader.close(); 
+        return grad;
+    }
+    
+    public Integer returnFirstColor() {
+        BufferedReader bufferedReader = new BufferedReader(preferences);
+        for (int count = 0; count < 3; count += 1) {
+            bufferedReader.readLine();
+        }
+        Integer color = Integer.parseBoolean(bufferedReader.readLine());
+        bufferedReader.close(); 
+        return color;
+    }
+    
+    public Integer returnSecondColor() {
+        BufferedReader bufferedReader = new BufferedReader(preferences);
+        for (int count = 0; count < 4; count += 1) {
+            bufferedReader.readLine();
+        }
+        Integer color = Integer.parseBoolean(bufferedReader.readLine());
+        bufferedReader.close(); 
+        return color;
+    }
+    
+    public Integer returnLineWidth() {
+        BufferedReader bufferedReader = new BufferedReader(preferences);
+        for (int count = 0; count < 5; count += 1) {
+            bufferedReader.readLine();
+        }
+        Integer lineWidth = Integer.parseBoolean(bufferedReader.readLine());
+        bufferedReader.close(); 
+        return lineWidth;
+    }
+    
+    public Integer returnDashWidth() {
+        BufferedReader bufferedReader = new BufferedReader(preferences);
+        for (int count = 0; count < 6; count += 1) {
+            bufferedReader.readLine();
+        }
+        Integer dashWidth = Integer.parseBoolean(bufferedReader.readLine());
+        bufferedReader.close(); 
+        return dashWidth;
+    }
+    
+    public Boolean returnDash() {
+        BufferedReader bufferedReader = new BufferedReader(preferences);
+        for (int count = 0; count < 7; count += 1) {
+            bufferedReader.readLine();
+        }
+        Boolean dash = Boolean.parseBoolean(bufferedReader.readLine());
+        bufferedReader.close(); 
+        return dash;
+    }
+}
+    
+    

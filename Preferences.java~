@@ -1,0 +1,156 @@
+import javax.swing.JPanel;
+
+// --------- Import GUI Items ---------
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JColorChooser;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JToolBar;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+// --------- Import JFrame/JPanel Layout Managers ---------
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+// --------- Import Events Handlers ---------
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import java.lang.Boolean;
+import java.lang.Integer;
+import java.lang.String;
+
+public class Preferences extends JPanel {
+    
+    private JComboBox shapeType;
+    private String shapes[] = {"Line", "Oval", "Rectangle"};
+    
+    private String colors[] = {"Red", "Green", "Blue", "Orange", "Pink", "Cyan", "Magenta", "Yellow", "Black", "White", "Gray", "Light Gray", "Dark Grey"};
+    private JComboBox color1;
+    private JComboBox color2;
+    private JLabel color1Label;
+    private JLabel color2Label;
+    
+    private JCheckBox clearOrNot;
+    private JCheckBox gradientOrNot;
+    private JCheckBox dashedOrNot;
+    
+    private SpinnerNumberModel fontSpinnerModel;
+    private JLabel fontSizeLabel;
+    private JSpinner fontSizeSpinner;
+    
+    private SpinnerNumberModel dashSpinnerModel;
+    private JLabel dashSizeLabel;
+    private JSpinner dashSizeSpinner;
+    
+    private JPanel shapeTypePanel;
+    private JPanel checkBoxes;
+    private JPanel color12;
+    private JPanel width;
+    private PreferenceReader preferenceReader;
+    
+    public Preferences(PreferenceReader preferenceReader) {
+        this.preferenceReader = preferenceReader;
+        setLayout(new BorderLayout(5, 5));
+        
+        // --------- North ---------
+        shapeTypePanel = new JPanel(new FlowLayout());
+        shapeType = new JComboBox(shapes);
+        shapeType.setSelectedIndex(Integer.parseInt(preferenceReader.returnShapeType()));
+        shapeTypePanel.add(shapeType);
+        
+        add(shapeTypePanel, BorderLayout.NORTH);
+        
+        // -------- South ----------
+        width = new JPanel(new FlowLayout());
+        
+        fontSizeLabel = new JLabel("Thickness ");
+        width.add(fontSizeLabel);
+        
+        fontSpinnerModel = new SpinnerNumberModel(Integer.parseInt(preferenceReader.returnLineWidth()), 1, 100, 1);
+        fontSizeSpinner = new JSpinner(fontSpinnerModel);
+        width.add(fontSizeSpinner);
+        
+        dashSizeLabel = new JLabel("Dash Thikness ");
+        width.add(dashSizeLabel);
+        
+        dashSpinnerModel = new SpinnerNumberModel(Integer.parseInt(preferenceReader.returnDashWidth()), 1, 100, 1);
+        dashSizeSpinner = new JSpinner(dashSpinnerModel);
+        width.add(dashSizeSpinner);
+        
+        add(width, BorderLayout.SOUTH);
+        
+        // ----------- West -------
+        checkBoxes = new JPanel(new GridLayout(3, 1));
+        
+        dashedOrNot = new JCheckBox("Dashed", Boolean.parseBoolean(preferenceReader.returnDash()));
+        checkBoxes.add(dashedOrNot);
+        
+        clearOrNot = new JCheckBox("Clear", Boolean.parseBoolean(preferenceReader.returnFill()));
+        checkBoxes.add(clearOrNot);
+        
+        gradientOrNot = new JCheckBox("Gradient", Boolean.parseBoolean(preferenceReader.returnGrad()));
+        checkBoxes.add(gradientOrNot);
+        
+        add(checkBoxes, BorderLayout.WEST);
+        
+        
+        //----------- East ---------
+        color12 = new JPanel(new GridLayout(2, 1));
+        color1Label = new JLabel("Color 1");
+        color12.add(color1Label);
+        color1 = new JComboBox(colors);
+        color1.setSelectedIndex(Integer.parseInt(preferenceReader.returnFirstColor()));
+        color12.add(color1);
+        
+        color2Label = new JLabel("Color 2");
+        color12.add(color2Label);
+        color2 = new JComboBox(colors);
+        color2.setSelectedIndex(Integer.parseInt(preferenceReader.returnSecondColor()));
+        color12.add(color2);
+        
+        add(color12, BorderLayout.EAST);
+    }
+    public void setPreferences() {
+        preferenceReader.setShapeType(shapeType.getSelectedIndex());
+        preferenceReader.setFill(clearOrNot.isSelected());
+        preferenceReader.setGrad(gradientOrNot.isSelected());
+        preferenceReader.setFirstColor(color1.getSelectedIndex());
+        preferenceReader.setSecondColor(color2.getSelectedIndex());
+        preferenceReader.setLineWidth((Integer)fontSizeSpinner.getValue());
+        preferenceReader.setDashWidth((Integer)dashSizeSpinner.getValue());
+        preferenceReader.setDash(dashedOrNot.isSelected());
+    }
+}
+        
+        
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
